@@ -13,6 +13,7 @@
 #include <GDIPlus.au3>
 #include <WindowsConstants.au3>
 #include <GuiConstantsEx.au3>
+#include "include\image_get_info.au3"
 
 Dim $ConfigFile ;Configuration File
 
@@ -40,31 +41,15 @@ $Title = IniRead($ConfigFile, "Splash", "Title", "powered by: ImTheROY")
 $ShowTime = IniRead($ConfigFile, "Splash", "ShowTime", 3)
 $RunAfterApp = IniRead($ConfigFile, "Splash", "RunAfterApp", "")
 
-$aiSize = _ImageSize($ImageFile)
 
-;----------Detect Image Sizes
-Func _ImageSize($ImgFullPath)
-    Local $hWnd, $hGuiSwitch, $aCtrlSize, $aRetSize[2] = [0, 0]
-
-    $hWnd = GUICreate($ImgFullPath, 0, 0, 0, 0, BitOR(0x80000000, 0x20000000), BitOR(0x00000080, 0x00000020))
-    $hGuiSwitch = GUISwitch($hWnd)
-    $aCtrlSize = ControlGetPos($hWnd, "", GUICtrlCreatePic($ImgFullPath, 0, 0, 0, 0))
-    GUIDelete($hWnd)
-    GUISwitch($hGuiSwitch)
-
-    If IsArray($aCtrlSize) Then
-        $aRetSize[0] = $aCtrlSize[2]; Width
-        $aRetSize[1] = $aCtrlSize[3]; Height
-        Return SetError(0, 0, $aRetSize)
-    EndIf
-    Return SetError(1, 0, $aRetSize)
-EndFunc   ;==>_ImageSize
+;----------Detect Image Size
+$imgInfo = _ImageGetInfo($ImageFile)
 
 ;-----Detect extension
 $extension = StringMid($ImageFile, StringInStr($ImageFile, ".", 2, -1))
 
 ;-----Create GUI
-$hGUI = GUICreate($Title, $aiSize[0], $aiSize[1], -1, -1, -1, $WS_EX_LAYERED)
+$hGUI = GUICreate($Title, _ImageGetParam($imgInfo, "Width"), _ImageGetParam($imgInfo, "Height"), -1, -1, -1, $WS_EX_LAYERED)
 GUISetState(@SW_SHOW)
 
 ;-----Load image

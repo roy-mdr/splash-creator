@@ -1,9 +1,0 @@
-!!!PREFERIBLEMENTE USA EL ICONO DEL PROGRAMA AL QUE ESTAS APLICANDO EL SPLASH
-
-
-
-Para que funcione el icono debe de tener MAXIMO 13 imagenes, de lo contrario se mostrara un icono por default.
-
-Si tu eres el creador del icono puedes borrar imagenes de resoluciones bajas como de 2 colores, 16 bits, etc...
-
-Si tu NO eres el creador, es recomendable que consigas un editor y elimines imagenes de resoluciones bajas.
