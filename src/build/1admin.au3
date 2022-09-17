@@ -15,14 +15,19 @@
 #include <GuiConstantsEx.au3>
 #include "include\image_get_info.au3"
 
+#NoTrayIcon
+#RequireAdmin
+
 Dim $ConfigFile ;Configuration File
 
 Dim $ImageFile ;Image to be shown.  Must be PNG
 Dim $Title ;Title to be displayed
 Dim $ShowTime ;Length of time to display image in seconds
 Dim $ImageFile ;Image name and extension
+Dim $Top ;On/Off Stay on Top
 
 Global $hGUI, $iLabel1, $iLabel2, $iSlider, $hImage
+
 
 ;-----Splash
 $ConfigFile = _GetConfigFile("splash.ini", True)
@@ -37,10 +42,9 @@ EndIf
 
 If Not FileExists($ImageFile) Then Exit
 
-$Title = IniRead($ConfigFile, "Splash", "Title", "powered by: ImTheROY")
+$Title = IniRead($ConfigFile, "Splash", "Title", "powered by: - R 0 Y -")
 $ShowTime = IniRead($ConfigFile, "Splash", "ShowTime", 3)
 $RunAfterApp = IniRead($ConfigFile, "Splash", "RunAfterApp", "")
-
 
 ;----------Detect Image Size
 $imgInfo = _ImageGetInfo($ImageFile)
@@ -49,7 +53,12 @@ $imgInfo = _ImageGetInfo($ImageFile)
 $extension = StringMid($ImageFile, StringInStr($ImageFile, ".", 2, -1))
 
 ;-----Create GUI
-$hGUI = GUICreate($Title, _ImageGetParam($imgInfo, "Width"), _ImageGetParam($imgInfo, "Height"), -1, -1, -1, $WS_EX_LAYERED)
+$Top = IniRead($ConfigFile, "Splash", "TopMost", 0)
+if $Top == 1 Then
+	$hGUI = GUICreate($Title, _ImageGetParam($imgInfo, "Width"), _ImageGetParam($imgInfo, "Height"), -1, -1, -1, BitOR($WS_EX_LAYERED,$WS_EX_TOPMOST))
+Else
+	$hGUI = GUICreate($Title, _ImageGetParam($imgInfo, "Width"), _ImageGetParam($imgInfo, "Height"), -1, -1, -1, $WS_EX_LAYERED)
+EndIf
 GUISetState(@SW_SHOW)
 
 ;-----Load image
@@ -84,7 +93,6 @@ Func SetBitmap($hGUI, $hImage, $iOpacity)
 	_WinAPI_DeleteObject($hBitmap)
 	_WinAPI_DeleteDC($hMemDC)
 EndFunc   ;==>SetBitmap
-
 
 
 ;-----RUN APP

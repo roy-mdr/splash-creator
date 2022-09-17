@@ -1,10 +1,10 @@
 #Region ;**** Directives created by AutoIt3Wrapper_GUI ****
-#AutoIt3Wrapper_Icon=..\..\v2.1\Splash Icon.ico
-#AutoIt3Wrapper_Outfile=Quick Splash Creator v3.exe
+#AutoIt3Wrapper_Icon=Splash Icon.ico
+#AutoIt3Wrapper_Outfile=Quick Splash Creator v3.5.exe
 #AutoIt3Wrapper_Compression=4
-#AutoIt3Wrapper_UseUpx=n
-#AutoIt3Wrapper_Res_Fileversion=3.1.0.1
-#AutoIt3Wrapper_Res_LegalCopyright=Copyright © ImTheROY - 2013
+#AutoIt3Wrapper_UseUpx=y
+#AutoIt3Wrapper_Res_Fileversion=3.5.0.0
+#AutoIt3Wrapper_Res_LegalCopyright=Copyright Â© - R 0 Y - | 2017
 #AutoIt3Wrapper_Res_Language=2058
 #EndRegion ;**** Directives created by AutoIt3Wrapper_GUI ****
 #include <ButtonConstants.au3>
@@ -13,6 +13,8 @@
 #include <StaticConstants.au3>
 #include <WindowsConstants.au3>
 #include <File.au3>
+
+#NoTrayIcon
 
 _main()
 
@@ -23,7 +25,9 @@ Global $iStartIndex = 1, $iCntRow, $iCntCol, $iCurIndex
 
 
 
-	$Form1 = GUICreate("Quick Splash Creator", 466, 297, -1, -1, -1, BitOR($WS_EX_ACCEPTFILES,$WS_EX_TOPMOST))
+	$mainGUI=GUICreate("Quick Splash Creator v3.5", 466, 335, -1, -1, -1, $WS_EX_ACCEPTFILES)
+	        ;GUICreate("Quick Splash Creator v3.5", 466, 335, -1, -1, -1, BitOR($WS_EX_ACCEPTFILES,$WS_EX_TOPMOST)) <--- OBSOLETO POR CHECHBOX ON/OFF
+
 
 	;Crea el grupo "Titulo"
 	$Titulo = GUICtrlCreateGroup("Titulo", 8, 8, 161, 41)
@@ -66,14 +70,17 @@ Global $iStartIndex = 1, $iCntRow, $iCntCol, $iCurIndex
 	$Radio1 = GUICtrlCreateRadio("Usar 'splash.exe' como launcher", 8, 230, 169, 17)
 	GUICtrlSetState(-1, $GUI_CHECKED)
 	$Radio2 = GUICtrlCreateRadio("Usar los accesos directos ya existentes como launcher (se renombraran archivos)", 8, 246, 400, 17)
+	$Checkbox1 = GUICtrlCreateCheckbox("Splash siempre visible (Top Most)", 8, 270, 400, 17)
+	$Checkbox2 = GUICtrlCreateCheckbox("Requerir derechos de Administrador", 8, 290, 400, 17)
 
 	;Boton: "Inyectar Ahora"
 	$Button5 = GUICtrlCreateButton("Inyectar Ahora", 290, 8, 167, 41)
 	GUICtrlSetCursor(-1, 3)
 
 	;Informacion del creador...
-	$Label2 = GUICtrlCreateLabel("-ImTheROY- © 2013", 8, 280, 102, 17)
-	$Label3 = GUICtrlCreateLabel("go_rojo@hotmail.com", 360, 280, 159, 17)
+	$Label2 = GUICtrlCreateLabel("- R 0 Y - Â© 2017", 8, 317, 102, 17)
+	$Label3 = GUICtrlCreateLabel("go_rojo@hotmail.com", 290, 317, 105, 17)
+	$TopMost = GUICtrlCreateCheckbox("Lock.TOP", 397, 315, 65, 17)
 	GUISetState(@SW_SHOW)
 
 
@@ -151,22 +158,35 @@ Global $iStartIndex = 1, $iCntRow, $iCntCol, $iCurIndex
 					If ($imgEXT = ".png") Or ($imgEXT = ".gif") Or ($imgEXT = ".jpg") Or ($imgEXT = ".bmp") Then
 						If ($icoEXT = ".ico") Then
 
+							;SELECCIONA ARCHIVO PARA COMPILAR REQUIRIENDO DERECHOS DE ADMINISTRADOR O NO
+							If GUICtrlRead($Checkbox2) = $GUI_CHECKED Then
+								FileCopy("build\1admin.au3", "build\splash.au3")
+							Else
+								FileCopy("build\0admin.au3", "build\splash.au3")
+							EndIf
+
 							;CREATE INI
 							If FileExists("splash.ini") Then
 								FileDelete("splash.ini")
 							EndIf
-FileWriteLine("splash.ini", "[splash]")
-FileWriteLine("splash.ini", "Title=" & $ContInput1)
-FileWriteLine("splash.ini", "ImageFile=" & $imgFILE & $imgEXT)
-FileWriteLine("splash.ini", "ShowTime=" & $ContInput2)
+							FileWriteLine("splash.ini", "[splash]")
+							FileWriteLine("splash.ini", "Title=" & $ContInput1)
+							FileWriteLine("splash.ini", "ImageFile=" & $imgFILE & $imgEXT)
+							FileWriteLine("splash.ini", "ShowTime=" & $ContInput2)
+							if GUICtrlRead($Checkbox1) = $GUI_CHECKED Then
+								FileWriteLine("splash.ini", "TopMost=" & 1)
+							Else
+								FileWriteLine("splash.ini", "TopMost=" & 0)
+							EndIf
 
 
 							;CREATE BAT
-FileWriteLine("build.bat", "title ... Espere ...")
-FileWriteLine("build.bat", "echo compilando launcher, espere...")
-FileWriteLine("build.bat", "echo.")
-FileWriteLine("build.bat", 'build\Aut2exe.exe /in "build\splash.au3" /icon "'&$icoDRIVE&$icoPATH&$icoFILE&$icoEXT&'" /pack')
-FileWriteLine("build.bat", "del %0")
+							FileWriteLine("build.bat", "@ECHO OFF")
+							FileWriteLine("build.bat", "title ... Espere ...")
+							FileWriteLine("build.bat", "echo compilando launcher, espere...")
+							FileWriteLine("build.bat", "echo.")
+							FileWriteLine("build.bat", 'build\Aut2exe.exe /in "build\splash.au3" /icon "'&$icoDRIVE&$icoPATH&$icoFILE&$icoEXT&'" /pack')
+							FileWriteLine("build.bat", "del %0")
 
 							;RUN BAT
 							RunWait("build.bat")
@@ -198,8 +218,10 @@ FileWriteLine("build.bat", "del %0")
 
 							EndIf
 
+							FileDelete("build\splash.au3")
+
 							;DONE! MSG
-							MsgBox(0,"Listo!","Listo!" & @CRLF & @CRLF & "Se han creado 3 archivos en:" & @CRLF & $exeDRIVE&$exePATH)
+							MsgBox(0x40000,"Listo!","Listo!" & @CRLF & @CRLF & "Se han creado 3 archivos en:" & @CRLF & $exeDRIVE&$exePATH)
 						Else
 							MsgBox(016 + 262144, "ERROR", "Debes seleccionar una icono con extension:" & @CRLF & ".ico")
 							$icoDIR = FileOpenDialog("Selecciona el icono:", "::{20D04FE0-3AEA-1069-A2D8-08002B30309D}", "Icon files (*.ico)")
@@ -219,6 +241,12 @@ FileWriteLine("build.bat", "del %0")
 					GUICtrlSetData($Input3, $fileDIR)
 				EndIf
 
+				Case $nMsg = $TopMost
+					if GUICtrlRead($TopMost) = $GUI_CHECKED Then
+						WinSetOnTop($mainGUI, "", $WINDOWS_ONTOP) ;= WinSetOnTop($mainGUI, "", 1)
+					Else
+						WinSetOnTop($mainGUI, "", $WINDOWS_NOONTOP) ;= WinSetOnTop($mainGUI, "", 0)
+					EndIf
 
 			Case $nMsg = $GUI_EVENT_CLOSE
 				Exit
