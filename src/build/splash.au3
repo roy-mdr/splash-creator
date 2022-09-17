@@ -1,18 +1,6 @@
-#Region ;**** Directives created by AutoIt3Wrapper_GUI ****
-#AutoIt3Wrapper_Icon=icon.ico
-#AutoIt3Wrapper_Outfile=splash.exe
-#AutoIt3Wrapper_Res_Comment=This is the first prototype of a dynamic splash creator. You can use it for run when you plug your USB or include it to any program. Enjoy.
-#AutoIt3Wrapper_Res_Description=Dynamic Splash Creator
-#AutoIt3Wrapper_Res_Fileversion=1.0.0.0
-#AutoIt3Wrapper_Res_Language=2058
-#AutoIt3Wrapper_Add_Constants=n
-#EndRegion ;**** Directives created by AutoIt3Wrapper_GUI ****
-; *** Start added by AutoIt3Wrapper ***
-#include <StructureConstants.au3>
-; *** End added by AutoIt3Wrapper ***
-#include <GDIPlus.au3>
-#include <WindowsConstants.au3>
-#include <GuiConstantsEx.au3>
+#include "Include\GDIPlus.au3"
+#include "Include\WindowsConstants.au3"
+#include "Include\GUIConstantsEx.au3"
 
 Dim $ConfigFile ;Configuration File
 

@@ -4,7 +4,7 @@ mode con cols=58 lines=11
 COLOR 0c
 
 ::Introduccion...
-echo Quick Splash Creator v.1.0
+echo Quick Splash Creator v.2.0.0
 echo.
 echo Todos los derechos reservados ธ -ImTheROY- 2012
 echo.
@@ -135,14 +135,14 @@ echo บ           Si: 1           บ
 echo บ           No: 2           บ
 echo ศอออออออออออออออออออออออออออผ
 set /p ans2=Escribe 1 o 2 y presiona ENTER: 
-if %ans2%==2 goto clsIMG
+if %ans2%==2 (goto clsIMG) else (goto size)
 
 
 
-::Dimensiones de %imgFILE%
+::Dimensiones de la imagen
 :size
 cls
-echo Introduce las dimensiones de la imagen (en pixeles)...
+echo Introduce las dimensiones de %imgFILE% (en pixeles)...
 echo.
 set /p imgWIDTH=Largo (Base): 
 echo.
@@ -161,20 +161,111 @@ cls
 
 
 
+::Especificaciones del icono
+echo ษอออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออป
+echo บAntes de importar el icono, desea ver las especificaciones del icono?บ
+echo ฬอออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออน
+echo บ                                Si: 1                                บ
+echo บ                                No: 2                                บ
+echo ศอออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออผ
+set /p ans4=Escribe 1 o 2 y presiona ENTER: 
+if %ans4%==1 (start "" "iconinfo.txt") else (goto clsICO)
+goto clsICO
+cls
+
+
+
+::Ruta completa del icono
+:errico
+COLOR 0c
+cls
+echo EL ICONO DEBE DE SER .ico!
+echo.
+goto ico
+:clsICO
+cls
+:ico
+echo Arrastra tu icono.ico aqui y luego presiona ENTER
+echo.
+set /p icoFULLdir=
+set icoFULLdir=%icoFULLdir:"=%
+cls
+
+set icoDIR=%icoFULLdir:"=%
+
+::Revisar si es .ico
+if "%icoDIR:~-4%"==".ico" (goto buc5) else (goto errico)
+
+:buc5
+if "%icoDIR:~-1%"=="\" (goto next5) else (set icoDIR=%icoDIR:~0,-1%)
+goto buc5
+
+:next5
+set icoFILE=%icoFULLdir:"=%
+
+:buc6
+echo %icoFILE% | find "\"
+if errorlevel 1 (goto next6) else (set icoFILE=%icoFILE:~1% & cls)
+goto buc6
+
+:next6
+cls
+COLOR F0
+echo Directorio del icono: %icoDIR%
+echo.
+echo Nombre del icono: %icoFILE%
+echo.
+echo.
+echo ษอออออออออออออออออออออออออออป
+echo บEs correcta la informacion?บ
+echo ฬอออออออออออออออออออออออออออน
+echo บ           Si: 1           บ
+echo บ           No: 2           บ
+echo ศอออออออออออออออออออออออออออผ
+set /p ans1=Escribe 1 o 2 y presiona ENTER: 
+if %ans1%==2 (goto clsICO) else (goto ttl)
+cls
+
+
+
 ::Titulo del Splash
+:ttl
+cls
 set /p splashTITLE=Escribe el titulo del Splash: 
 cls
 
 
 
 ::Duracion del Splash
+cls
 set /p splashTIME=Por cuantos segundos se mostrara el Splash?: 
 cls
 
 
 
-::CREAR ARCHIVO INI
-echo creando datos, espere...
+::Compilar codigo AutoIt3
+cls
+echo compilando launcher, espere...
+echo.
+build\Aut2exe.exe /in "build\splash.au3" /icon "%icoFULLdir%" /pack
+cls
+
+
+
+::Obtiene directorio donde se esta ejecutando el BAT
+set batDIR=%0
+set batDIR=%batDIR:"=%
+
+:batbuc
+if "%batDIR:~-1%"=="\" (goto setini) else (set batDIR=%batDIR:~0,-1%)
+goto batbuc
+
+
+
+::Crea primeras lineas del .ini
+:setini
+cls
+echo Creando archivos, espere...
 
 >splash.ini echo [Splash]
 >>splash.ini echo Title=%splashTITLE%
@@ -183,20 +274,20 @@ echo creando datos, espere...
 >>splash.ini echo ImageHeight=%imgHEIGHT%
 >>splash.ini echo ShowTime=%splashTIME%
 
-cls
-
 
 
 ::Copiar archivos
+:cop
+cls
 echo copiando archivos, espere...
-
-copy /y "splash.exe" "%exeDIR%"
+move /y "%batDIR%build\splash.exe" "%exeDIR%"
 copy /y "%imgFULLdir%" "%exeDIR%"
 cls
 
 
 
 :Acciones...
+cls
 mode con cols=81 lines=7
 echo ษออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออป
 echo บ                               Que desea hacer?                               บ
@@ -208,8 +299,11 @@ set /p ans1=Escribe 1 o 2 y presiona ENTER:
 if %ans1%==1 goto rena
 
 ::FINALIZAR
+
 >>splash.ini echo RunAfterApp=%exeFILE%
-move /y "splash.ini" "%exeDIR%"
+
+move "splash.ini" "%exeDIR%"
+
 cls
 mode con cols=90 lines=6
 echo LISTO! los archivos estan listos en "%exeDIR%"
@@ -224,12 +318,15 @@ exit
 
 
 :rena
+
 >>splash.ini echo RunAfterApp=[original]%exeFILE%
-move /y "splash.ini" "%exeDIR%"
+
+move "splash.ini" "%exeDIR%"
+
 cls
 rename "%exeDIR%%exeFILE%" "[original]%exeFILE%"
 rename "%exeDIR%splash.exe" "%exeFILE%"
-pause
+
 cls
 mode con cols=90 lines=6
 echo LISTO! los archivos estan listos en "%exeDIR%"
