@@ -4,9 +4,9 @@ mode con cols=58 lines=11
 COLOR 0c
 
 ::Introduccion...
-echo Quick Splash Creator v.2.0.0
+echo Quick Splash Creator v.2.1.0
 echo.
-echo Todos los derechos reservados ธ -ImTheROY- 2012
+echo Todos los derechos reservados ๏ฟฝ -ImTheROY- 2012
 echo.
 echo Solo para uso personal.
 echo Prohibida la venta y cambio de propietario del producto.
@@ -59,21 +59,11 @@ if errorlevel 1 (goto next2) else (set exeFILE=%exeFILE:~1% & cls)
 goto buc2
 
 :next2
-cls
-COLOR F0
-echo Directorio del exe: %exeDIR%
-echo.
-echo Nombre del programa: %exeFILE%
 echo.
 echo.
-echo ษอออออออออออออออออออออออออออป
-echo บEs correcta la informacion?บ
-echo ฬอออออออออออออออออออออออออออน
-echo บ           Si: 1           บ
-echo บ           No: 2           บ
-echo ศอออออออออออออออออออออออออออผ
-set /p ans1=Escribe 1 o 2 y presiona ENTER: 
-if %ans1%==2 (goto clsEXE) else (goto clsIMG)
+echo Revise si la informacion es correcta...
+pause>nul
+goto clsIMG
 cls
 
 
@@ -100,9 +90,7 @@ set imgDIR=%imgFULLdir:"=%
 :png
 if "%imgDIR:~-4%"==".png" (goto buc3) else (goto jpg)
 :jpg
-if "%imgDIR:~-4%"==".jpg" (goto buc3) else (goto jpeg)
-:jpeg
-if "%imgDIR:~-4%"==".jpeg" (goto buc3) else (goto bmp)
+if "%imgDIR:~-4%"==".jpg" (goto buc3) else (goto bmp)
 :bmp
 if "%imgDIR:~-4%"==".bmp" (goto buc3) else (goto gif)
 :gif
@@ -123,53 +111,31 @@ goto buc4
 :next4
 cls
 COLOR F0
-echo Directorio de la imagen: %imgDIR%
-echo.
-echo Nombre de la imagen: %imgFILE%
 echo.
 echo.
-echo ษอออออออออออออออออออออออออออป
-echo บEs correcta la informacion?บ
-echo ฬอออออออออออออออออออออออออออน
-echo บ           Si: 1           บ
-echo บ           No: 2           บ
-echo ศอออออออออออออออออออออออออออผ
-set /p ans2=Escribe 1 o 2 y presiona ENTER: 
-if %ans2%==2 (goto clsIMG) else (goto size)
-
-
-
-::Dimensiones de la imagen
-:size
-cls
-echo Introduce las dimensiones de %imgFILE% (en pixeles)...
-echo.
-set /p imgWIDTH=Largo (Base): 
-echo.
-set /p imgHEIGHT=Altura: 
-echo.
-echo.
-echo ษอออออออออออออออออออออออออออป
-echo บEs correcta la informacion?บ
-echo ฬอออออออออออออออออออออออออออน
-echo บ           Si: 1           บ
-echo บ           No: 2           บ
-echo ศอออออออออออออออออออออออออออผ
-set /p ans3=Escribe 1 o 2 y presiona ENTER: 
-if %ans3%==2 goto size
+echo Revise si la informacion es correcta...
+pasue>nul
 cls
 
 
 
 ::Especificaciones del icono
-echo ษอออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออป
-echo บAntes de importar el icono, desea ver las especificaciones del icono?บ
-echo ฬอออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออน
-echo บ                                Si: 1                                บ
-echo บ                                No: 2                                บ
-echo ศอออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออผ
-set /p ans4=Escribe 1 o 2 y presiona ENTER: 
-if %ans4%==1 (start "" "iconinfo.txt") else (goto clsICO)
+COLOR 0c
+mode con cols=100 lines=50
+echo 
+echo !!!PREFERIBLEMENTE USA EL ICONO DEL PROGRAMA AL QUE ESTAS APLICANDO EL SPLASH
+echo 
+echo 
+echo 
+echo Para que funcione el icono debe de tener MAXIMO 13 imagenes, de lo contrario se mostrara un icono por default.
+echo 
+echo Si tu eres el creador del icono puedes borrar imagenes de resoluciones bajas como de 2 colores, 16 bits, etc...
+echo 
+echo Si tu NO eres el creador, es recomendable que consigas un editor y elimines imagenes de resoluciones bajas.
+echo 
+echo 
+echo 
+pause
 goto clsICO
 cls
 
@@ -216,12 +182,12 @@ echo.
 echo Nombre del icono: %icoFILE%
 echo.
 echo.
-echo ษอออออออออออออออออออออออออออป
-echo บEs correcta la informacion?บ
-echo ฬอออออออออออออออออออออออออออน
-echo บ           Si: 1           บ
-echo บ           No: 2           บ
-echo ศอออออออออออออออออออออออออออผ
+echo ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝอป
+echo ๏ฟฝEs correcta la informacion?๏ฟฝ
+echo ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝอน
+echo ๏ฟฝ           Si: 1           ๏ฟฝ
+echo ๏ฟฝ           No: 2           ๏ฟฝ
+echo ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝอผ
 set /p ans1=Escribe 1 o 2 y presiona ENTER: 
 if %ans1%==2 (goto clsICO) else (goto ttl)
 cls
@@ -270,8 +236,6 @@ echo Creando archivos, espere...
 >splash.ini echo [Splash]
 >>splash.ini echo Title=%splashTITLE%
 >>splash.ini echo ImageFile=%imgFILE%
->>splash.ini echo ImageWidth=%imgWIDTH%
->>splash.ini echo ImageHeight=%imgHEIGHT%
 >>splash.ini echo ShowTime=%splashTIME%
 
 
@@ -289,12 +253,12 @@ cls
 :Acciones...
 cls
 mode con cols=81 lines=7
-echo ษออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออป
-echo บ                               Que desea hacer?                               บ
-echo ฬออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออน
-echo บ1:    Seguir usando los accesos directos al programa (se renombraran archivos)บ
-echo บ2: Usar el nombre "splash.exe" como launcher (recomendado si se va a compilar)บ
-echo ศออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออผ
+echo ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝอป
+echo ๏ฟฝ                               Que desea hacer?                               ๏ฟฝ
+echo ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝอน
+echo ๏ฟฝ1:    Seguir usando los accesos directos al programa (se renombraran archivos)๏ฟฝ
+echo ๏ฟฝ2: Usar el nombre "splash.exe" como launcher (recomendado si se va a compilar)๏ฟฝ
+echo ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝอผ
 set /p ans1=Escribe 1 o 2 y presiona ENTER: 
 if %ans1%==1 goto rena
 
