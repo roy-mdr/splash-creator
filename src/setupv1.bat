@@ -176,12 +176,12 @@ cls
 ::CREAR ARCHIVO INI
 echo creando datos, espere...
 
-echo [Splash]>splash.ini
-echo Title=%splashTITLE%>>splash.ini
-echo ImageFile=%imgFILE%>>splash.ini
-echo ImageWidth=%imgWIDTH%>>splash.ini
-echo ImageHeight=%imgHEIGHT%>>splash.ini
-echo ShowTime=%splashTIME%>>splash.ini
+>splash.ini echo [Splash]
+>>splash.ini echo Title=%splashTITLE%
+>>splash.ini echo ImageFile=%imgFILE%
+>>splash.ini echo ImageWidth=%imgWIDTH%
+>>splash.ini echo ImageHeight=%imgHEIGHT%
+>>splash.ini echo ShowTime=%splashTIME%
 
 cls
 
@@ -192,7 +192,6 @@ echo copiando archivos, espere...
 
 copy /y "splash.exe" "%exeDIR%"
 copy /y "%imgFULLdir%" "%exeDIR%"
-move /y "splash.ini" "%exeDIR%"
 cls
 
 
@@ -209,7 +208,8 @@ set /p ans1=Escribe 1 o 2 y presiona ENTER:
 if %ans1%==1 goto rena
 
 ::FINALIZAR
-echo RunAfterApp=splash.exe>>splash.ini
+>>splash.ini echo RunAfterApp=%exeFILE%
+move /y "splash.ini" "%exeDIR%"
 cls
 mode con cols=90 lines=6
 echo LISTO! los archivos estan listos en "%exeDIR%"
@@ -224,7 +224,8 @@ exit
 
 
 :rena
-echo RunAfterApp=%exeFILE%>>splash.ini
+>>splash.ini echo RunAfterApp=[original]%exeFILE%
+move /y "splash.ini" "%exeDIR%"
 cls
 rename "%exeDIR%%exeFILE%" "[original]%exeFILE%"
 rename "%exeDIR%splash.exe" "%exeFILE%"
